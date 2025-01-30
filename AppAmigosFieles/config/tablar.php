@@ -142,6 +142,8 @@ return [
     |
     */
 
+    
+
     'menu' => [
         // Navbar items:
         [
@@ -154,6 +156,9 @@ return [
             'text' => 'Animales',
             'icon' => 'ti ti-dog',
             'url' => '/animales',
+            'can' => 'animales',
+            
+            
             
              
             
@@ -162,26 +167,30 @@ return [
             'text' => 'Adopciones',
             'icon' => 'ti ti-heart',
             'url' => '/adopciones',
-            'can' => 'view adopcion',
+            'can' => 'adopciones',
+            
         ],
         [    
     
             'text' => 'Seguimientos',
             'url' => '/seguimientoadopcione',
             'icon' => 'ti ti-brand-baidu',
-            'can' => 'view seguimientos',
+            'can' => 'seguimientoadopcione',
+            
         ],
         [
             'text' => 'Vsitas de Seguimiento',
             'url' => '/visitasseguimiento',
             'icon' => 'ti ti-article',
-            'can' => 'view visitas',
+            'can' => 'visitasseguimiento',
+            
         ],
         
         [
             'text' => 'Adoptantes',
             'icon' => 'ti ti-user',
             'url' => '/adoptantes',
+            
 
            
             
@@ -191,7 +200,7 @@ return [
             'text' => 'Usuarios',
             'icon' => 'ti ti-user-cog',
             'url' => '/users',
-            'can' => 'view usuarios',
+            'can' => 'users',
       
             
         ],

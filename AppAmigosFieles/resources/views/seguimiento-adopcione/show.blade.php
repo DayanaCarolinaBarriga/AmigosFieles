@@ -48,7 +48,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p><strong>ID:</strong> {{ $seguimientoAdopcione->id }}</p>
-                                    <p><strong>Adopción ID:</strong> {{ $seguimientoAdopcione->adopcion_id }}</p>
+                                   <!-- Mostrar nombre del animal, adoptante y fecha de adopción -->
+                                   <p><strong>Adopción:</strong> 
+                                        {{ $seguimientoAdopcione->adopcion->animale->nombre ?? 'Desconocido' }} - 
+                                        {{ $seguimientoAdopcione->adopcion->adoptante->nombre ?? 'Desconocido' }} - 
+                                        {{ $seguimientoAdopcione->adopcion->fecha_adopcion ?? 'Desconocida' }}
+                                    </p>
                                     <p><strong>Seguimiento:</strong> {{ $seguimientoAdopcione->seguimiento ? 'Sí' : 'No' }}</p>
                                     <p><strong>Comentario de Seguimiento:</strong> {{ $seguimientoAdopcione->comentario_seguimiento }}</p>
                                     <p><strong>Apto:</strong> {{ $seguimientoAdopcione->apto ? 'Sí' : 'No' }}</p>

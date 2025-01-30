@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -17,25 +16,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Verificar si los roles ya existen antes de crearlos
+        // Verificar y crear roles si no existen
         $roleSuperAdmin = Role::firstOrCreate(['name' => 'superAdmin', 'guard_name' => 'web']);
         $roleVoluntario = Role::firstOrCreate(['name' => 'voluntario', 'guard_name' => 'web']);
 
-        // Verificar si los permisos ya existen antes de crearlos
-        $permissionManageRoles = Permission::firstOrCreate(['name' => 'manage roles', 'guard_name' => 'web']);
-        $permissionViewAnimals = Permission::firstOrCreate(['name' => 'view animals', 'guard_name' => 'web']);
-        $permissionManageAnimals = Permission::firstOrCreate(['name' => 'manage animals', 'guard_name' => 'web']);
-        $permissionViewAdopcion = Permission::firstOrCreate(['name' => 'view adopcion', 'guard_name' => 'web']);
-        $permissionViewSeguimientos = Permission::firstOrCreate(['name' => 'view seguimientos', 'guard_name' => 'web']);
-        $permissionViewVisitas = Permission::firstOrCreate(['name' => 'view visitas', 'guard_name' => 'web']);
-        $permissionViewUsuarios = Permission::firstOrCreate(['name' => 'view usuarios', 'guard_name' => 'web']);
-        // Asignar permisos al rol superAdmin
+        // Definir permisos si no existen
+        $permisosSuperAdmin = [
+            'animales',
+            'adoptantes',
+            'adopciones',
+            'gastos',
+            'users',
+            'seguimientoadopcione',
+            'visitasseguimiento',
+        ];
+
+        $permisosVoluntario = [
+           'animales',
+            'adoptantes',
+            'gastos',
+        ];
+
+        // Crear los permisos necesarios si no existen
+        foreach (array_merge($permisosSuperAdmin, $permisosVoluntario) as $permiso) {
+            Permission::firstOrCreate(['name' => $permiso, 'guard_name' => 'web']);
+        }
+
+        // Asignar todos los permisos al rol superAdmin
         $roleSuperAdmin->syncPermissions(Permission::all());
-        $roleVoluntario>syncPermissions(Permission::$permissionViewAdopcion);
-        $roleVoluntario>syncPermissions(Permission::$permissionViewSeguimientos);
-        $roleVoluntario>syncPermissions(Permission::$permissionViewVisitas);
-        $roleVoluntario>syncPermissions(Permission::$permissionViewUsuarios);
-        // Verificar si el usuario superAdmin ya existe antes de crearlo
+
+        // Asignar permisos específicos al rol voluntario
+        $roleVoluntario->syncPermissions($permisosVoluntario);
+
+        // Verificar y crear el usuario superAdmin si no existe
         $userSuperAdmin = User::firstOrCreate(
             ['email' => 'dayanacarobarriga@gmail.com'],
             [
@@ -47,5 +60,7 @@ class DatabaseSeeder extends Seeder
 
         // Asignar el rol superAdmin al usuario
         $userSuperAdmin->assignRole('superAdmin');
+
+        
     }
 }

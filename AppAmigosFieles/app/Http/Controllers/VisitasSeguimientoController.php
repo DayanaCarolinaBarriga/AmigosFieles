@@ -30,12 +30,18 @@ class VisitasSeguimientoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $seguimientos = SeguimientoAdopcione::all();
-        $visitasSeguimiento = new VisitasSeguimiento();
-        return view('visitas-seguimiento.create', compact('visitasSeguimiento', 'seguimientos'));
-    }
+    
+     public function create(Request $request)
+     {
+         // Capturar el id del seguimiento desde la URL
+         $seguimientoId = $request->get('seguimiento_id');
+     
+         // Obtener el seguimiento para poder usarlo en la vista, si es necesario
+         $seguimiento = SeguimientoAdopcione::findOrFail($seguimientoId);
+     
+         $visitasSeguimiento = new VisitasSeguimiento();
+         return view('visitas-seguimiento.create', compact('visitasSeguimiento', 'seguimiento'));
+     }
 
     /**
      * Store a newly created resource in storage.

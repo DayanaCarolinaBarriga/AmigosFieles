@@ -40,10 +40,12 @@
     </div>
 </div>
 
-
+@if(isset($seguimientoAdopcione) && $seguimientoAdopcione->retiro_adopcion == 0)
     <div class="form-group mb-3">
-        <a href="{{ route('visitasseguimiento.create', ['seguimiento_id' => $seguimientoAdopcione->id]) }}" class="btn btn-success">Agregar Visita</a>
+        <a href="{{ route('visitasseguimiento.create', ['seguimiento_id' => $seguimientoAdopcione->id]) }}" class="btn btn-success">Crear Visita</a>
     </div>
+@endif
+   
 
 
 <div class="form-footer">

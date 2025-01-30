@@ -65,7 +65,13 @@
                                     @forelse ($seguimientos as $seguimiento)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            <td>{{ $seguimiento->adopcion->id }}</td>
+                                            
+                                            <!-- Mostrar Nombre del Animal, Nombre del Adoptante y Fecha de Adopción -->
+                                            <td>
+                                                {{ $seguimiento->adopcion->animale->nombre ?? 'Desconocido' }} - 
+                                                {{ $seguimiento->adopcion->adoptante->nombre ?? 'Desconocido' }} - 
+                                                {{ $seguimiento->adopcion->fecha_adopcion ?? 'Desconocida' }}
+                                            </td>
                                             <td>{{ $seguimiento->seguimiento ? 'Sí' : 'No' }}</td>
                                             <td>{{ $seguimiento->comentario_seguimiento }}</td>
                                             <td>{{ $seguimiento->apto ? 'Sí' : 'No' }}</td>

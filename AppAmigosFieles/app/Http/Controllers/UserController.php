@@ -116,4 +116,12 @@ class UserController extends Controller
         return redirect()->route('users.index')
             ->with('success', 'User deleted successfully');
     }
+
+    public function showUserRole($userId)
+{
+    $user = User::find($userId);  // Cambia con el ID del usuario que deseas verificar
+    $roles = $user->getRoleNames();  // Obtiene los roles asignados
+
+    return view('user.roles', compact('roles'));  // Pasa los roles a la vista
+}
 }

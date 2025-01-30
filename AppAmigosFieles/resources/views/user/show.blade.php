@@ -48,21 +48,28 @@
                             <h3 class="card-title">Detalles de Usuarios</h3>
                         </div>
                         <div class="card-body">
-                            
-<div class="form-group">
-<strong>Nombre:</strong>
-{{ $user->name }}
-</div>
-<div class="form-group">
-<strong>Correo:</strong>
-{{ $user->email }}
-</div>
-
-<div class="form-group">
-<strong>Estado:</strong>
-{{ $user->estado }}
-</div>
-
+                            <div class="form-group">
+                                <strong>Nombre:</strong>
+                                {{ $user->name }}
+                            </div>
+                            <div class="form-group">
+                                <strong>Correo:</strong>
+                                {{ $user->email }}
+                            </div>
+                            <div class="form-group">
+                                <strong>Estado:</strong>
+                                {{ $user->estado }}
+                            </div>
+                            <!-- Mostrar el rol del usuario -->
+                            <div class="form-group">
+                                <strong>Rol:</strong>
+                                @php
+                                    $roles = $user->getRoleNames();
+                                @endphp
+                                @foreach($roles as $role)
+                                    <span class="badge bg-primary">{{ $role }}</span>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,5 +77,3 @@
         </div>
     </div>
 @endsection
-
-

@@ -45,7 +45,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Detalles de Adopciones</h3>
+                            <h3 class="card-title">Detalles de Adopcion</h3>
                         </div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('adopciones.store') }}" id="ajaxForm" role="form"
