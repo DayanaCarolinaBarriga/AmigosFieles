@@ -18,14 +18,15 @@ class SeguimientoAdopcioneController extends Controller
      */
     public function index()
     {
-        // Cargar los seguimientos con las relaciones necesarias y paginar
+            // Cargar los seguimientos con las relaciones necesarias y paginar
         $seguimientos = SeguimientoAdopcione::with([
             'adopcion.adoptante', // Relación con el adoptante
             'adopcion.animale'    // Relación con el animal
         ])->paginate(10);
 
-        // Retornar la vista con los datos
-        return view('seguimiento-adopcione.index', compact('seguimientos'));
+        // Retornar la vista con los datos y la variable i para el índice
+        return view('seguimiento-adopcione.index', compact('seguimientos'))
+            ->with('i', (request()->input('page', 1) - 1) * $seguimientos->perPage());
     }
 
     /**

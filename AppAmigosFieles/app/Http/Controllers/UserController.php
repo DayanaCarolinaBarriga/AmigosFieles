@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role; // Añadir esta línea
+
 
 /**
  * Class UserController
@@ -32,7 +34,8 @@ class UserController extends Controller
     public function create()
     {
         $user = new User();
-        return view('user.create', compact('user'));
+        $roles = Role::pluck('name', 'id');
+        return view('user.create', compact('user','roles'));
     }
 
     /**
@@ -43,12 +46,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(User::$rules);
-
-        $user = User::create($request->all());
-
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'roles' => 'required'
+        ]);
+    
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+    
+        // Obtener el rol por ID y asignar
+        $role = Role::findById($request->roles[0]);
+        $user->assignRole($role);
+    
         return redirect()->route('users.index')
-            ->with('success', 'User created successfully.');
+            ->with('success', 'Usuario registrado exitosamente.');
     }
 
     /**
@@ -73,8 +89,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-
-        return view('user.edit', compact('user'));
+        $roles = Role::pluck('name', 'id');
+        return view('user.edit', compact('user', 'roles'));
     }
 
     /**
@@ -86,22 +102,17 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // Actualizar las reglas de validación para excluir el correo actual
-    $rules = [
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email,' . $user->id,  // Excluir el correo actual
-        'rol' => 'required|string',
-        'estado' => 'required|string',
-    ];
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'roles' => 'required'
+        ]);
 
-    // Validar los datos de la solicitud
-    $validatedData = $request->validate($rules);
+        $user->update($request->all());
+        $user->syncRoles($request->input('roles'));
 
-    // Actualizar el usuario con los datos validados
-    $user->update($validatedData);
-
-    return redirect()->route('users.index')
-        ->with('success', 'User updated successfully');
+        return redirect()->route('users.index')
+            ->with('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
@@ -114,7 +125,7 @@ class UserController extends Controller
         $user = User::find($id)->delete();
 
         return redirect()->route('users.index')
-            ->with('success', 'User deleted successfully');
+            ->with('success', 'Usuario eliminado exitosamente');
     }
 
     public function showUserRole($userId)

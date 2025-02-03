@@ -1,28 +1,24 @@
 @extends('tablar::page')
 
 @section('title')
-    Seguimiento Adopciones
+    Seguimiento de Adopciones
 @endsection
 
 @section('content')
-    <!-- Page header -->
     <div class="page-header d-print-none">
         <div class="container-xl">
             <div class="row g-2 align-items-center">
                 <div class="col">
-                    <!-- Page pre-title -->
                     <div class="page-pretitle">
                         Lista
                     </div>
                     <h2 class="page-title">
-                        {{ __('Seguimiento Adopciones') }}
+                        {{ __('Seguimiento de Adopciones') }}
                     </h2>
                 </div>
-                <!-- Page title actions -->
                 <div class="col-12 col-md-auto ms-auto d-print-none">
                     <div class="btn-list">
                         <a href="{{ route('seguimientoadopcione.create') }}" class="btn btn-primary d-none d-sm-inline-block">
-                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
                                  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -30,7 +26,7 @@
                                 <line x1="12" y1="5" x2="12" y2="19"/>
                                 <line x1="5" y1="12" x2="19" y2="12"/>
                             </svg>
-                            Registar Seguimiento
+                            Crear Seguimiento
                         </a>
                     </div>
                 </div>
@@ -38,59 +34,105 @@
         </div>
     </div>
 
-    <!-- Page content -->
     <div class="page-body">
         <div class="container-xl">
-            <div class="row row-cards">
+            @if(config('tablar','display_alert'))
+                @include('tablar::common.alert')
+            @endif
+            <div class="row row-deck row-cards">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lista de Seguimientos</h3>
+                            <h3 class="card-title">Seguimientos</h3>
                         </div>
-                        <div class="card-body">
-                            <table class="table table-hover">
+                        <div class="card-body border-bottom py-3">
+                            <div class="d-flex">
+                                <div class="text-muted">
+                                    Mostrar
+                                    <div class="mx-2 d-inline-block">
+                                        <input type="text" class="form-control form-control-sm" value="10" size="3"
+                                               aria-label="Registros">
+                                    </div>
+                                    registros
+                                </div>
+                                <div class="ms-auto text-muted">
+                                    Buscar:
+                                    <div class="ms-2 d-inline-block">
+                                        <input type="text" class="form-control form-control-sm"
+                                               aria-label="Buscar">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive min-vh-100">
+                            <table class="table card-table table-vcenter text-nowrap datatable">
                                 <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Adopción</th>
-                                        <th>Seguimiento</th>
-                                        <th>Comentario</th>
-                                        <th>Apto</th>
-                                        <th>Retiro</th>
-                                        <th>Acciones</th>
-                                    </tr>
+                                <tr>
+                                    <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox"></th>
+                                    <th class="w-1">No.</th>
+                                    <th>Adopcion(Animal- Adoptante)</th>
+                                    <th>Fecha Adopción</th>
+                                    <th>Seguimiento</th>
+                                   
+                                    <th>Apto</th>
+                                    <th>Retiro</th>
+                                    <th class="w-1"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @php $i = 0; @endphp
-                                    @forelse ($seguimientos as $seguimiento)
-                                        <tr>
-                                            <td>{{ ++$i }}</td>
+                               
+                                @forelse ($seguimientos as $seguimiento)
+                                    <tr>
+                                    <td><input class="form-check-input m-0 align-middle" type="checkbox"
+                                                   aria-label="Select seguimiento"></td>
+                                        <td>{{ ++$i }}</td>
+                                        <td>
+                                            {{ $seguimiento->adopcion->animale->nombre ?? 'Desconocido' }} - 
+                                            {{ $seguimiento->adopcion->adoptante->nombre ?? 'Desconocido' }} 
                                             
-                                            <!-- Mostrar Nombre del Animal, Nombre del Adoptante y Fecha de Adopción -->
-                                            <td>
-                                                {{ $seguimiento->adopcion->animale->nombre ?? 'Desconocido' }} - 
-                                                {{ $seguimiento->adopcion->adoptante->nombre ?? 'Desconocido' }} - 
-                                                {{ $seguimiento->adopcion->fecha_adopcion ?? 'Desconocida' }}
-                                            </td>
-                                            <td>{{ $seguimiento->seguimiento ? 'Sí' : 'No' }}</td>
-                                            <td>{{ $seguimiento->comentario_seguimiento }}</td>
-                                            <td>{{ $seguimiento->apto ? 'Sí' : 'No' }}</td>
-                                            <td>{{ $seguimiento->retiro_adopcion ? 'Sí' : 'No' }}</td>
-                                            <td>
-                                                <a href="{{ route('seguimientoadopcione.show', $seguimiento->id) }}" class="btn btn-info btn-sm">Ver</a>
-                                                <a href="{{ route('seguimientoadopcione.edit', $seguimiento->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                                                <form action="{{ route('seguimientoadopcione.destroy', $seguimiento->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="if(!confirm('¿Quieres proceder?')){return false;}">Eliminar</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7">No se encontraron Datos</td>
-                                        </tr>
-                                    @endforelse
+                                        </td>
+                                        <td>{{ $seguimiento->adopcion->fecha_adopcion ?? 'Desconocida' }}</td>
+                                        <td>{{ $seguimiento->seguimiento ? 'Sí' : 'No' }}</td>
+                                        
+                                        <td>{{ $seguimiento->apto ? 'Sí' : 'No' }}</td>
+                                        <td>{{ $seguimiento->retiro_adopcion ? 'Sí' : 'No' }}</td>
+                                        <td>
+                                            <div class="btn-list flex-nowrap">
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle align-text-top"
+                                                            data-bs-toggle="dropdown">
+                                                        Acciones
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('seguimientoadopcione.show',$seguimiento->id) }}">
+                                                            Ver
+                                                        </a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('seguimientoadopcione.edit',$seguimiento->id) }}">
+                                                            Editar
+                                                        </a>
+                                                        <form action="{{ route('seguimientoadopcione.destroy',$seguimiento->id) }}"
+                                                              method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                    onclick="return confirm('¿Desea eliminar este registro?')"
+                                                                    class="dropdown-item text-red">
+                                                                <i class="fa fa-fw fa-trash"></i>
+                                                                Eliminar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="8">No se encontraron datos</td>
+                                    </tr>
+                                @endforelse
                                 </tbody>
                             </table>
                         </div>

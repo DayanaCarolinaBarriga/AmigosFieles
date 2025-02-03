@@ -48,20 +48,24 @@
                             <h3 class="card-title">Visitas Seguimiento Details</h3>
                         </div>
                         <div class="card-body">
-                            
-<div class="form-group">
-<strong>Seguimiento Id:</strong>
-{{ $visitasSeguimiento->seguimiento_id }}
-</div>
-<div class="form-group">
-<strong>Visita:</strong>
-{{ $visitasSeguimiento->visita }}
-</div>
-<div class="form-group">
-<strong>Fecha Visita:</strong>
-{{ $visitasSeguimiento->fecha_visita }}
-</div>
-
+                        <div class="form-group">
+                            <strong>Visita de la adopcion(Animal-Adoptante):</strong>
+                            {{ $visitasSeguimiento->seguimientoAdopcione->adopcion->animale->nombre ?? 'Desconocido' }} - 
+                            {{ $visitasSeguimiento->seguimientoAdopcione->adopcion->adoptante->nombre ?? 'Desconocido' }} -
+                            {{ $visitasSeguimiento->seguimientoAdopcione->adopcion->fecha_adopcion ?? 'Sin fecha' }}
+                        </div>
+                            <div class="form-group">
+                                <strong>¿Se realizó la visita?:</strong>
+                                {{ $visitasSeguimiento->visita ? 'Si' : 'No' }}
+                            </div>
+                            <div class="form-group">
+                            <strong>Fecha Visita:</strong>
+                            {{ $visitasSeguimiento->fecha_visita }}
+                            </div>
+                            <div class="form-group">
+                            <strong>Comentario:</strong>
+                            {{ $visitasSeguimiento->comentario }}
+                            </div>
                         </div>
                     </div>
                 </div>

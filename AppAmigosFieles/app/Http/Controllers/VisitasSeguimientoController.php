@@ -19,8 +19,11 @@ class VisitasSeguimientoController extends Controller
      */
     public function index()
     {
-        $visitasSeguimiento = VisitasSeguimiento::paginate(10);
-
+        $visitasSeguimiento = VisitasSeguimiento::with([
+             'seguimientoAdopcione.adopcion.animale',
+            'seguimientoAdopcione.adopcion.adoptante'
+        ])->paginate(10);
+    
         return view('visitas-seguimiento.index', compact('visitasSeguimiento'))
             ->with('i', (request()->input('page', 1) - 1) * $visitasSeguimiento->perPage());
     }

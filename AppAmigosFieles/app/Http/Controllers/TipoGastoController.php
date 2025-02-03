@@ -48,7 +48,7 @@ class TipoGastoController extends Controller
         $tipoGasto = TipoGasto::create($request->all());
 
         return redirect()->route('tipo-gasto.index')
-            ->with('success', 'TipoGasto created successfully.');
+            ->with('success', 'TipoGasto registrado correctamente.');
     }
 
     /**
@@ -91,7 +91,7 @@ class TipoGastoController extends Controller
         $tipoGasto->update($request->all());
 
         return redirect()->route('tipo-gasto.index')
-            ->with('success', 'TipoGasto updated successfully');
+            ->with('success', 'TipoGasto actualizado correctamente');
     }
 
     /**

@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="text-center text-muted mt-3">
-            ¿Aun no tiene cuenta? <a href="{{route('register')}}" tabindex="-1">Registrate</a>
+            ¿No tienes cuenta? <a href="{{ url('/') }}" tabindex="-1">Regresar</a>
         </div>
     </div>
 @endsection

@@ -47,7 +47,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p><strong>ID:</strong> {{ $seguimientoAdopcione->id }}</p>
+                                    
                                    <!-- Mostrar nombre del animal, adoptante y fecha de adopción -->
                                    <p><strong>Adopción:</strong> 
                                         {{ $seguimientoAdopcione->adopcion->animale->nombre ?? 'Desconocido' }} - 

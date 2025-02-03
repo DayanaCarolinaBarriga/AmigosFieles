@@ -1,7 +1,7 @@
 @extends('tablar::page')
 
 @section('title')
-    User
+    Usuario
 @endsection
 
 @section('content')
@@ -87,8 +87,8 @@
                                     
 										<th>Nombre</th>
 										<th>Correo</th>
-										
-										<th>Estado</th>
+										<th>rol</th>
+
 
                                     <th class="w-1"></th>
                                 </tr>
@@ -103,8 +103,11 @@
                                         
 											<td>{{ $user->name }}</td>
 											<td>{{ $user->email }}</td>
-											
-											<td>{{ $user->estado }}</td>
+											<td>
+                                                @foreach($user->roles as $role)
+                                                    <span class="badge bg-primary">{{ $role->name }}</span>
+                                                @endforeach
+                                            </td>
 
                                         <td>
                                             <div class="btn-list flex-nowrap">
