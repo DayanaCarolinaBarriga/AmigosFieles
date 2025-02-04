@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         // Definir permisos si no existen
         $permisosSuperAdmin = [
-            'animales',
+            
             'adoptantes',
             'adopciones',
             'gastos',
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         $permisosVoluntario = [
-           'animales',
+           
             'adoptantes',
             'gastos',
         ];

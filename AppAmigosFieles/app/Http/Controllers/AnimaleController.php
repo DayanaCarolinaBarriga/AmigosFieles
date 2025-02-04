@@ -7,6 +7,7 @@ use App\Models\Adopcione;
 use App\Models\EspeciesAnimale;
 use Illuminate\Http\Request;
 use PDF;
+use Carbon\Carbon;
 
 class AnimaleController extends Controller
 {
@@ -231,4 +232,51 @@ class AnimaleController extends Controller
         $pdf = PDF::loadView('Informes.pdf', compact('animales'));
         return $pdf->download('informe_animales.pdf');
     }
+
+    public function filterAnimales(Request $request)
+    {
+        // Obtener las especies para el dropdown
+        $especies = EspeciesAnimale::all();
+
+        // Iniciar consulta
+        $query = Animale::join('especies_animales', 'animales.id_especie', '=', 'especies_animales.id')
+                        ->select('animales.*', 'especies_animales.especie as nombre_especie')
+                        ->where('animales.estado', 'disponible');  // Filtro para mostrar solo los animales disponibles
+
+        // Aplicar filtros
+        if ($request->filled('nombre')) {
+            $query->where('animales.nombre', 'like', '%' . $request->nombre . '%');
+        }
+
+        if ($request->filled('especie')) {
+            $query->where('animales.id_especie', $request->especie);
+        }
+
+        // Filtro por sexo
+        if ($request->filled('sexo')) {
+            $query->where('animales.sexo', $request->sexo);
+        }
+
+        if ($request->filled('edad_min')) {
+            $query->whereRaw('TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) >= ?', [$request->edad_min]);
+        }
+
+        if ($request->filled('edad_max')) {
+            $query->whereRaw('TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) <= ?', [$request->edad_max]);
+        }
+
+        if ($request->filled('esterilizado')) {
+            $query->where('animales.esterilizado', $request->esterilizado);
+        }
+
+        // Obtener resultados con paginación
+        $animales = $query->paginate(10);
+        
+        // Mantener los parámetros de la URL para la paginación
+        $animales->appends($request->all());
+
+        return view('homev.animales', compact('animales', 'especies'));
+    }
+
+
 }

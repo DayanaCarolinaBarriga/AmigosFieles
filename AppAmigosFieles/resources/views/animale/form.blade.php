@@ -57,7 +57,7 @@
 
 <div class="form-group mb-3">
     {{ Form::label('estado', 'Estado', ['class' => 'form-label']) }}
-    {{ Form::select('estado', ['Disponible' => 'Disponible', 'No disponible' => 'No disponible'], old('estado', $animale->estado ?? 'Disponible'), [
+    {{ Form::select('estado', ['Disponible' => 'Disponible', 'No_disponible' => 'No_disponible'], old('estado', $animale->estado ?? 'Disponible'), [
         'class' => 'form-control' . ($errors->has('estado') ? ' is-invalid' : ''),
         'placeholder' => 'Seleccione el estado del animal'
     ]) }}

@@ -39,8 +39,19 @@ Route::prefix('informes')->group(function () {
     Route::get('generate-pdf', [AnimaleController::class, 'generatePdf'])->name('informes.generatePdf');
 });
 
+Route::get('/homev/donaciones', function () {
+    return view('welcome', ['content' => 'homev.donaciones']);
+});
 
+Route::get('/homev/voluntariado', function () {
+    return view('welcome', ['content' => 'homev.voluntariado']);
+});
 
+Route::get('/homev/contactanos', function () {
+    return view('welcome', ['content' => 'homev.contactanos']);
+});
+
+Route::get('/homev/animales', [AnimaleController::class, 'filterAnimales']);
 // Para la recuperación de contraseñas
 Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');

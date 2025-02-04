@@ -7,115 +7,204 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Reset de estilos */
-        body, html { margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Nunito', sans-serif;
+            min-height: 100vh;
+        }
         * { box-sizing: border-box; }
-        .bg-gray { background-color: #f7fafc; }
+        
+        body {
+            background-image: url('https://amigosfieles.org/wp-content/uploads/2021/09/MambruN1L23-e1632491252435-768x576.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color:rgb(250, 244, 244);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(243, 234, 234, 0.3); /* Reducida para ver mejor la imagen */
+            z-index: 0;
+        }
+
+        .navegacion, #contenido-principal {
+            position: relative;
+            z-index: 1;
+        }
 
         /* Estilos del menú */
-        nav {
+        .navegacion {
+            background-color: rgba(95, 192, 26, 0.9);
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            background-color: #333;
-            color: white;
-            padding: 10px 0;
         }
-        nav a {
-            color: white;
+
+        .nav-link {
+            color: #fff;
+            font-weight: 600;
             text-decoration: none;
-            padding: 10px;
-            transition: background-color 0.3s ease;
+            padding: 0.5rem 1rem;
+            transition: background 0.3s ease, color 0.3s ease;
+            border-radius: 8px;
         }
-        nav a:hover {
-            background-color: #555;
+
+        .nav-link:hover {
+            background: #3cb371;
+        }
+
+        .nav-link.active {
+            background:rgb(125, 200, 26);
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
 
         /* Estilos de las secciones */
         .section {
-            padding: 20px;
-            text-align: center;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            margin: 40px auto;
+            padding: 50px;
+            max-width: 1200px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
-        .section img {
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
+        .main-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
         }
 
-        .donations, .volunteers {
-            background-color: #f4f4f4;
-            margin-top: 20px;
+        .content-text {
+            flex: 1;
         }
 
-        /* Estilo para los botones */
+        .main-title {
+            color: #228b22;
+            font-size: 2.8em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.6em;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            font-size: 1.3em;
+            color: #3cb371;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #333;
+            text-align: justify;
+        }
+
+        .logo-container {
+            flex: 0 0 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
         .btn {
-            background-color: #007bff;
+            background-color: #228b22;
             color: white;
-            padding: 10px 20px;
+            padding: 15px 30px;
             text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
+
         .btn:hover {
-            background-color: #0056b3;
+            background-color: #32cd32;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .logo-container {
+                margin-bottom: 20px;
+            }
+
+            .description {
+                text-align: left;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="overlay"></div>
 
     <!-- Menú de navegación -->
-    <nav>
-        <a href="/">Inicio</a>
-        <a href="#mascotas">Mascotas</a>
-        <a href="#donaciones">Donaciones</a>
-        <a href="#voluntariado">Voluntariado</a>
-        <a href="/login">Iniciar Sesión</a>
-        <a href="#contactanos">Contáctanos</a>
+    <nav class="navegacion">
+        <div class="nav-container">
+            <a href="/" class="nav-link {{ Request::is('/') ? 'active' : '' }}">Inicio</a>
+            <a href="{{ url('/homev/animales') }}" class="nav-link">Mascotas</a>
+            <a href="{{ url('/homev/donaciones') }}" class="nav-link">Donaciones</a>
+            <a href="{{ url('/homev/voluntariado') }}" class="nav-link">Voluntariado</a>
+            <a href="{{ url('/homev/contactanos') }}" class="nav-link">Contáctanos</a>
+            <a href="/login" class="nav-link {{ Request::is('login') ? 'active' : '' }}">Iniciar Sesión</a>
+            
+        </div>
     </nav>
 
     <!-- Sección de Inicio -->
-    <div class="section" id="inicio">
-        <h1>Fundación de Protección y Rescate Animal Amigos Fieles</h1>
-        <p>Organización sin fines de lucro</p>
-        <p>Refugio canino y centro de esterilizaciones para perros y gatos</p>
-        <p>Somos una fundación dedicada al rescate, la rehabilitación y el cuidado de animales abandonados y en situaciones de riesgo. Los perros rescatados pasan su tiempo de recuperación en nuestro refugio canino o en hogares temporales para posteriormente ser ubicados en hogares adoptantes.</p>
-        <img src="https://amigosfieles.org/wp-content/uploads/2021/06/logo-vertical.png" alt="Logo de Amigos Fieles">
-    </div>
-
-    <!-- Sección de Donaciones -->
-    <div class="section donations" id="donaciones">
-        <h2>Ayudar y Donar</h2>
-        <p>Nuestra labor de rescate, rehabilitación, alimentación y cuidados de los perros depende de sus donaciones.</p>
-        <p>No contamos con ningún financiamiento fijo de fondos públicos o privados. Para poder ayudar a los animalitos necesitados dependemos de la ayuda económica de la ciudadanía.</p>
-        <p>Los gastos en atención médica son altos ya que muchos perros llegan en mal estado de salud y necesitan tratamientos o cirugías costosas.</p>
-        <p>Nuestra campaña de esterilización con funcionamiento permanente nos permite ofrecer un bienestar animal sostenible y garantizar una solución a largo plazo para reducir la reproducción descontrolada de perros y gatos.</p>
-        <h3>Cuentas para Donativos:</h3>
-        <p>Fundación Amigos Fieles</p>
-        <p>Bco. Pichincha | Cta. de Ahorros # 2206948617</p>
-        <p>CAPCE | Cta. de Ahorros # 1701100010139637</p>
-        <p>RUC: 1691727196001</p>
-        <a href="https://www.gofundme.com" class="btn" target="_blank">Crowdfunding con GoFundMe</a>
-    </div>
-
-    <!-- Sección de Voluntariado -->
-    <div class="section volunteers" id="voluntariado">
-        <h2>Voluntariado</h2>
-        <p>El voluntariado es un elemento clave del trabajo de nuestra fundación. Trabajamos con voluntarios locales, nacionales e internacionales. Los voluntarios se pueden integrar en acciones puntuales como una minga en el refugio, por el tiempo de semanas, meses o de forma permanente. Valoramos la voluntad de cada persona de involucrarse según sus posibilidades. También ofrecemos pasantías para estudiantes universitarios.</p>
-        <p>Si quieres formar parte activa de nuestra labor, comunícate con nosotros por correo electrónico, teléfono o WhatsApp.</p>
-        <p>Nuestros perritos te agradecen el tiempo que les dedicas a ellos o a la infraestructura del refugio, que es esencial para que puedan tener una vida digna mientras están con nosotros.</p>
-    </div>
-
-    <!-- Sección de Iniciar Sesión -->
-    <div class="section" id="login">
-        <a href="/login" class="btn">Iniciar Sesión</a>
-    </div>
-
-    <!-- Sección de Contacto -->
-    <div class="section" id="contactanos">
-        <h2>Contáctanos</h2>
-        <p>¡Estamos aquí para ayudarte! Ponte en contacto con nosotros para más información sobre nuestra fundación y cómo puedes ayudar.</p>
-        <p>Email: contacto@amigosfieles.org</p>
-        <p>Teléfono: +123456789</p>
+    <div class="section" id="contenido-principal">
+        @if(isset($content))
+            @include($content)
+        @else
+            <div class="main-content">
+                <div class="logo-container">
+                    <img src="https://amigosfieles.org/wp-content/uploads/2021/07/logo-small-negro.png" alt="Logo de Amigos Fieles" class="logo-image">
+                </div>
+                <div class="content-text">
+                    <h1 class="main-title">Fundación de Protección y Rescate Animal Amigos Fieles</h1>
+                    <div class="subtitle">Organización sin fines de lucro</div>
+                    
+                    <p class="description">Somos una fundación dedicada al rescate, la rehabilitación y el cuidado de animales abandonados y en situaciones de riesgo. Los perros rescatados pasan su tiempo de recuperación en nuestro refugio canino o en hogares temporales para posteriormente ser ubicados en hogares adoptantes.</p>
+                   
+                </div>
+            </div>
+        @endif
     </div>
 
 </body>

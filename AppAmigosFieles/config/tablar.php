@@ -156,7 +156,7 @@ return [
             'text' => 'Animales',
             'icon' => 'ti ti-dog',
             'url' => '/animales',
-            'can' => 'animales',
+           
             
             
             
