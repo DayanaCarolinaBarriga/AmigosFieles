@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'Update Tipo Gasto')
+@section('title', 'Actualizar Tipo Gasto')
 
 @section('content')
     <!-- Page header -->

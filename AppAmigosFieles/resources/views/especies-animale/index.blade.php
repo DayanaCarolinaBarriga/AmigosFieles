@@ -1,7 +1,7 @@
 @extends('tablar::page')
 
 @section('title')
-    Especies Animale
+    Especies Animales
 @endsection
 
 @section('content')
@@ -134,7 +134,7 @@
                                         </td>
                                     </tr>
                                 @empty
-                                    <td>No Data Found</td>
+                                    <td>No se encontraron datos</td>
                                 @endforelse
                                 </tbody>
 

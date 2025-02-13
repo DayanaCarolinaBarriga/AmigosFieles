@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'Update Visitas Seguimiento')
+@section('title', 'Actualizar Visitas Seguimiento')
 
 @section('content')
     <!-- Page header -->

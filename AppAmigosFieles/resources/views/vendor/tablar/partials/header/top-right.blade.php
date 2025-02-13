@@ -15,10 +15,8 @@
     </a>
     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
         <!-- Enlace a la vista show del usuario autenticado -->
-        <a href="{{ route('users.show', Auth()->user()->id) }}" class="dropdown-item">Perfil</a>
-        <!-- Enlace a la vista edit del usuario autenticado -->
-        <a href="{{ route('users.edit', Auth()->user()->id) }}" class="dropdown-item">Configuración</a>
-        <div class="dropdown-divider"></div>
+        
+        
         <!-- Botón de logout -->
         <a class="dropdown-item"
            href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

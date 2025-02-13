@@ -48,7 +48,7 @@ class EspeciesAnimaleController extends Controller
         $especiesAnimale = EspeciesAnimale::create($request->all());
 
         return redirect()->route('especies-animale.index')
-            ->with('success', 'EspeciesAnimale created successfully.');
+            ->with('success', 'Especie de Animale creado exitosamente.');
     }
 
     /**
@@ -91,7 +91,7 @@ class EspeciesAnimaleController extends Controller
         $especiesAnimale->update($request->all());
 
         return redirect()->route('especies-animale.index')
-            ->with('success', 'EspeciesAnimale updated successfully');
+            ->with('success', 'Especie de Animal actualizado exitosamente.');
     }
 
     /**
@@ -104,6 +104,6 @@ class EspeciesAnimaleController extends Controller
         $especiesAnimale = EspeciesAnimale::find($id)->delete();
 
         return redirect()->route('especies-animale.index')
-            ->with('success', 'EspeciesAnimale deleted successfully');
+            ->with('success', 'Especie de Animal eliminado exitosamente.');
     }
 }

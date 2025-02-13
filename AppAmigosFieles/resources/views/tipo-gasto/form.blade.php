@@ -5,7 +5,7 @@
         {{ Form::text('nombre', $tipoGasto->nombre, ['class' => 'form-control' .
         ($errors->has('nombre') ? ' is-invalid' : ''), 'placeholder' => 'Nombre']) }}
         {!! $errors->first('nombre', '<div class="invalid-feedback">:message</div>') !!}
-        <small class="form-hint">tipoGasto <b>nombre</b> instruction.</small>
+        <small class="form-hint">Escriba el  <b>nombre</b> del tipo de gasto.</small>
     </div>
 </div>
 

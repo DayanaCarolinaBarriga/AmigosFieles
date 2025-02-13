@@ -1,7 +1,8 @@
 <!-- home.blade.php -->
 @extends('tablar::page')
-
+@section('title', 'Inicio')
 @section('content')
+
 <!-- Fullscreen Background Section -->
 <div 
     class="position-relative min-vh-100 bg-cover text-white d-flex justify-content-center align-items-center" 

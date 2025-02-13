@@ -7,7 +7,7 @@ use App\Http\Controllers\AnimaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdoptanteController;
 use App\Http\Controllers\GastoController;
-use App\Http\Controllers\AdopcionController;
+use App\Http\Controllers\AdopcioneController;
 
 
 
@@ -38,6 +38,12 @@ Route::prefix('informes')->group(function () {
     Route::get('filters', [AnimaleController::class, 'filters'])->name('informes.filters');
     Route::get('generate-pdf', [AnimaleController::class, 'generatePdf'])->name('informes.generatePdf');
 });
+
+Route::prefix('informes')->group(function () {
+    Route::get('filters-adopciones', [AdopcioneController::class, 'filters'])->name('informes.filters_adopciones');
+    Route::get('generate-pdf-adopciones', [AdopcioneController::class, 'generatePdf'])->name('informes.generatePdf_adopciones');
+});
+
 
 Route::get('/homev/donaciones', function () {
     return view('welcome', ['content' => 'homev.donaciones']);

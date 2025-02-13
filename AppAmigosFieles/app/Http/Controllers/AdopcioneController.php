@@ -6,6 +6,7 @@ use App\Models\Adopcione;
 use App\Models\Adoptante;
 use App\Models\Animale;
 use Illuminate\Http\Request;
+use PDF;
 
 class AdopcioneController extends Controller
 {
@@ -224,4 +225,124 @@ class AdopcioneController extends Controller
         $adopcione->delete();
         return redirect()->route('adopciones.index')->with('success', 'Adopción eliminada exitosamente.');
     }
+
+    
+    public function filters(Request $request)
+    {
+        // Obtener datos para los filtros
+        $adoptantes = Adoptante::all();
+        $animales = Animale::all();
+
+        // Construir la consulta base
+        $query = Adopcione::with(['animale', 'adoptante']);
+
+        // Aplicar filtros si están presentes
+        if ($request->filled('id_animal')) {
+            $query->where('id_animal', $request->id_animal);
+        }
+
+        if ($request->filled('id_adoptante')) {
+            $query->where('id_adoptante', $request->id_adoptante);
+        }
+
+        if ($request->filled('estado_proceso')) {
+            $query->where('estado_proceso', $request->estado_proceso);
+        }
+
+        if ($request->filled('fecha_adopcion_desde')) {
+            $query->where('fecha_adopcion', '>=', $request->fecha_adopcion_desde);
+        }
+
+        if ($request->filled('fecha_adopcion_hasta')) {
+            $query->where('fecha_adopcion', '<=', $request->fecha_adopcion_hasta);
+        }
+
+        // Obtener las adopciones filtradas
+        $adopciones = $query->get();
+
+        // Retornar la vista con los datos
+        return view('Informes.filters_adopciones', compact('adoptantes', 'animales', 'adopciones'));
+    }
+
+    public function generatePdf(Request $request)
+    {
+        // Construir la consulta base
+        $query = Adopcione::with(['animale', 'adoptante']);
+
+        // Aplicar filtros si están presentes
+        if ($request->filled('id_animal')) {
+            $query->where('id_animal', $request->id_animal);
+        }
+
+        if ($request->filled('id_adoptante')) {
+            $query->where('id_adoptante', $request->id_adoptante);
+        }
+
+        if ($request->filled('estado_proceso')) {
+            $query->where('estado_proceso', $request->estado_proceso);
+        }
+
+        if ($request->filled('fecha_adopcion_desde')) {
+            $query->where('fecha_adopcion', '>=', $request->fecha_adopcion_desde);
+        }
+
+        if ($request->filled('fecha_adopcion_hasta')) {
+            $query->where('fecha_adopcion', '<=', $request->fecha_adopcion_hasta);
+        }
+
+        // Obtener los resultados
+        $adopciones = $query->get();
+
+        // Generar el PDF con la vista adecuada
+        $pdf = PDF::loadView('Informes.pdf_adopciones', compact('adopciones'));
+        return $pdf->download('informe_adopciones.pdf');
+    }
+
+    public function filterAdopciones(Request $request)
+    {
+        // Obtener datos para los filtros
+        $adoptantes = Adoptante::all();
+        $animales = Animale::all();
+
+        // Iniciar consulta
+        $query = Adopcione::with(['animale', 'adoptante']);
+
+        // Aplicar filtros
+        if ($request->filled('nombre_animal')) {
+            $query->whereHas('animale', function($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->nombre_animal . '%');
+            });
+        }
+
+        if ($request->filled('nombre_adoptante')) {
+            $query->whereHas('adoptante', function($q) use ($request) {
+                $q->where('nombre', 'like', '%' . $request->nombre_adoptante . '%');
+            });
+        }
+
+        if ($request->filled('estado_proceso')) {
+            $query->where('estado_proceso', $request->estado_proceso);
+        }
+
+        if ($request->filled('visita_previa')) {
+            $query->where('visita_previa', $request->visita_previa);
+        }
+
+        if ($request->filled('fecha_desde')) {
+            $query->where('fecha_adopcion', '>=', $request->fecha_desde);
+        }
+
+        if ($request->filled('fecha_hasta')) {
+            $query->where('fecha_adopcion', '<=', $request->fecha_hasta);
+        }
+
+        // Obtener resultados con paginación
+        $adopciones = $query->paginate(10);
+        
+        // Mantener los parámetros de la URL para la paginación
+        $adopciones->appends($request->all());
+
+        return view('adopcione.lista', compact('adopciones', 'adoptantes', 'animales'));
+    }
+
 }

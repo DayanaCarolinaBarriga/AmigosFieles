@@ -211,6 +211,7 @@ return [
             'url' => '/gastos',
             
         ],
+    
         [
             'text' => 'Configuración',
             'icon' => 'ti ti-help',
@@ -229,15 +230,26 @@ return [
             ],
         ],
 
-        
-        //informes
         [
             'text' => 'Informes',
             'icon' => 'ti ti-chart-histogram',
-            'url' => env('INFORMES_FILTERS_URL', '#'), // Usa la variable de entorno // Genera la URL directamente
             
+            'submenu' => [
+                [
+                    'text' => 'Informe Animales',
+                    'icon' => 'ti ti-chart-histogram',
+                    'url' => env('INFORMES_FILTERS_URL', '#'), // Usa la variable de entorno // Genera la URL directamente
+                ],
+                [
+                    'text' => 'Informes de Adopciones',
+                    'icon' => 'ti ti-file-report',
+                    'url' => env('INFORMES_FILTERS_ADOPCIONES_URL', '#'),
+                ]
+            ],
         ],
 
+        
+       
     ],
 
     /*

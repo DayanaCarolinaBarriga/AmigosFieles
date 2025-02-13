@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'View Seguimiento Adopcione')
+@section('title', 'Ver Seguimiento Adopcione')
 
 @section('content')
     <!-- Page header -->
@@ -10,10 +10,10 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        View
+                        Ver
                     </div>
                     <h2 class="page-title">
-                        {{ __('Seguimiento Adopcione') }}
+                        {{ __('Seguimiento Adopciones') }}
                     </h2>
                 </div>
                 <!-- Page title actions -->

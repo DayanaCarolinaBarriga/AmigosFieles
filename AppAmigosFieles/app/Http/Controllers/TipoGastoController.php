@@ -91,7 +91,7 @@ class TipoGastoController extends Controller
         $tipoGasto->update($request->all());
 
         return redirect()->route('tipo-gasto.index')
-            ->with('success', 'TipoGasto actualizado correctamente');
+            ->with('success', 'Tipo de Gasto actualizado correctamente');
     }
 
     /**
@@ -104,6 +104,6 @@ class TipoGastoController extends Controller
         $tipoGasto = TipoGasto::find($id)->delete();
 
         return redirect()->route('tipo-gasto.index')
-            ->with('success', 'TipoGasto deleted successfully');
+            ->with('success', 'Tipo Gasto eliminado exitosamente');
     }
 }

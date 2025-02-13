@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'Update Adopcione')
+@section('title', 'Actualizar Adopciones')
 
 @section('content')
     <!-- Page header -->
@@ -10,10 +10,10 @@
                 <div class="col">
                     <!-- Page pre-title -->
                     <div class="page-pretitle">
-                        Update
+                        Actualizar
                     </div>
                     <h2 class="page-title">
-                        {{ __('Adopcione ') }}
+                        {{ __('Adopciones ') }}
                     </h2>
                 </div>
                 <!-- Page title actions -->

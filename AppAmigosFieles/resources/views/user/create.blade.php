@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'Create User')
+@section('title', 'Registrar User')
 
 @section('content')
     <!-- Page header -->

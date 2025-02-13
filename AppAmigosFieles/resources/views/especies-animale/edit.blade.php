@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'Update Especies Animale')
+@section('title', 'Actualizar Especies Animales')
 
 @section('content')
     <!-- Page header -->
@@ -13,7 +13,7 @@
                         Actualizar
                     </div>
                     <h2 class="page-title">
-                        {{ __('Especies Animale ') }}
+                        {{ __('Especies Animales ') }}
                     </h2>
                 </div>
                 <!-- Page title actions -->

@@ -89,7 +89,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Role::pluck('name', 'id');
+        $roles = Role::pluck('name', 'name'); // Cambiar 'id' por 'name' para Spatie
         return view('user.edit', compact('user', 'roles'));
     }
 
@@ -105,11 +105,17 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'roles' => 'required'
+            'roles' => 'required|array' // Asegurar que sea un array
         ]);
 
-        $user->update($request->all());
-        $user->syncRoles($request->input('roles'));
+        // Actualizar solo los campos permitidos
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
+
+        // Sincronizar roles correctamente
+        $user->syncRoles($request->roles);
 
         return redirect()->route('users.index')
             ->with('success', 'Usuario actualizado exitosamente.');

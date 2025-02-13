@@ -1,6 +1,6 @@
 @extends('tablar::page')
 
-@section('title', 'Create Seguimiento Adopcione')
+@section('title', 'Registar Seguimiento Adopciones')
 
 @section('content')
     <!-- Page header -->

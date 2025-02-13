@@ -1,7 +1,7 @@
 @extends('tablar::page')
 
 @section('title')
-    Animale
+    Animales
 @endsection
 
 @section('content')
