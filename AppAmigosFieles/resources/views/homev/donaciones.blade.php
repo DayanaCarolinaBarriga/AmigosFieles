@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="donation-footer">
-            <a href="https://wa.me/593939465219" class="donate-button">Contáctanos para donar</a>
+            <a href="https://wa.me/593997586662" class="donate-button">Contáctanos para donar</a>
         </div>
     </div>
 </div>

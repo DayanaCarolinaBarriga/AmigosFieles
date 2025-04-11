@@ -11,7 +11,7 @@
         </div>
 
         <div class="contact-button">
-            <a href="https://wa.me/593939465219"class="btn-volunteer">Contáctanos y sé parte del cambio</a>
+            <a href="https://wa.me/593997586662"class="btn-volunteer">Contáctanos y sé parte del cambio</a>
         </div>
 
         <div class="image-gallery">

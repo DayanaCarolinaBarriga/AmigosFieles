@@ -24,7 +24,7 @@
 
         <div class="contact-button">
             <!-- Enlace a WhatsApp con tu número -->
-            <a href="https://wa.me/593939465219" class="btn-contact">¡Haz la diferencia, contáctanos ahora!</a>
+            <a href="https://wa.me/593997586662" class="btn-contact">¡Haz la diferencia, contáctanos ahora!</a>
         </div>
     </div>
 </div>
